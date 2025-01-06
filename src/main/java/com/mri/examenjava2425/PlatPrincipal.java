@@ -8,6 +8,10 @@ public class PlatPrincipal {
     private double prix;
     private List<Ingredient> ingredients;
 
+    public PlatPrincipal(int id, String nom) {
+        this.id = id;
+        this.nom = nom;
+    }
     public PlatPrincipal(int id, String nom, List<Ingredient> ingredients) {
         this.id = id;
         this.nom = nom;

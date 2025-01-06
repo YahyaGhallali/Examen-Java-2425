@@ -12,7 +12,7 @@ public class SingletonConnexionDB {
     public static Connection getConnection() throws SQLException {
         try {
             Connection con = DriverManager.getConnection(url, user, password);
-            System.out.println("Connection with DB established");
+//            System.out.println("Connection with DB established");
             return con;
         } catch (SQLException e) {
             System.out.println("Problem with DB");
