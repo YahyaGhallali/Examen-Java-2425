@@ -429,14 +429,12 @@ public class Supplement {
 ### SingletonConnexionDB.java
 ````java
 public class SingletonConnexionDB {
-    static final private String url = "jdbc:mysql://localhost:3306/ExamenJava2425";
     static final private String user = "root";
     static final private String password = "yahya";
 
     public static Connection getConnection() throws SQLException {
         try {
             Connection con = DriverManager.getConnection(url, user, password);
-//            System.out.println("Connection with DB established");
             return con;
         } catch (SQLException e) {
             System.out.println("Problem with DB");
@@ -517,8 +515,7 @@ public class PlatPrincipalDAO {
         PlatPrincipalDAO platPrincipalDAO = new PlatPrincipalDAO();
         System.out.println(platPrincipalDAO.listePlatsPrincipaux());
     }
-
-    //    public List<>
+    
     public List<PlatPrincipal> listePlatsPrincipaux() throws SQLException {
         List<PlatPrincipal> platPrincipals = new ArrayList<>();
         connection = SingletonConnexionDB.getConnection();
@@ -615,10 +612,8 @@ public class RepasDAO {
     }
 
     public void supprimerRepas(int id) throws SQLException {
-        // First delete related supplements associations
         supprimerSupplementsDeRepas(id);
-
-        // Then delete the repas itself
+        
         String query = "DELETE FROM Repas WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setInt(1, id);
@@ -632,8 +627,7 @@ public class RepasDAO {
             stmt.setInt(1, repas.getPlatPrincipal().getId());
             stmt.setInt(2, repas.getId());
             stmt.executeUpdate();
-
-            // Update supplements
+            
             supprimerSupplementsDeRepas(repas.getId());
             sauvegarderSupplements(repas);
         }
@@ -676,8 +670,7 @@ public class RepasDAO {
             stmt.executeUpdate();
         }
     }
-
-    // Additional utility methods
+    
 
     public List<Repas> chercheTousRepas() throws SQLException {
         List<Repas> repas = new ArrayList<>();
@@ -888,8 +881,7 @@ public class CommandeDAO {
             stmt.setInt(1, commande.getClient().getId());
             stmt.setInt(2, commande.getId());
             stmt.executeUpdate();
-
-            // Update related repas
+            
             supprimerRepasDeCommande(commande.getId());
             sauvegarderRepas(commande);
         }
@@ -918,7 +910,6 @@ public class RestaurantShell {
 
     public RestaurantShell() {
         try {
-            // Initialize connection (you should use proper connection parameters)
             connection = SingletonConnexionDB.getConnection();
             clientDAO = new ClientDAO();
             commandeDAO = new CommandeDAO();
@@ -928,8 +919,7 @@ public class RestaurantShell {
             ingredientDAO = new IngredientDAO();
 
             scanner = new Scanner(System.in);
-
-            // Insert initial data
+            
             insertSampleData();
 
         } catch (SQLException e) {
@@ -939,39 +929,33 @@ public class RestaurantShell {
     }
 
     private void insertSampleData() throws SQLException {
-        // Insert Clients
         Client client1 = new Client("Jean Dupont");
         Client client2 = new Client("Marie Martin");
         clientDAO.ajouterClient(client1);
         clientDAO.ajouterClient(client2);
-
-        // Insert Ingredients
+        
         Ingredient ing1 = new Ingredient("Pain burger", 1.50);
         Ingredient ing2 = new Ingredient("Steak haché", 3.50);
         Ingredient ing3 = new Ingredient("Salade", 0.50);
         ingredientDAO.ajouterIngredient(ing1);
         ingredientDAO.ajouterIngredient(ing2);
         ingredientDAO.ajouterIngredient(ing3);
-
-        // Insert PlatPrincipal
+        
         PlatPrincipal plat1 = new PlatPrincipal("Burger Classic");
         plat1.ajouterIngredient(ing1);
         plat1.ajouterIngredient(ing2);
         plat1.ajouterIngredient(ing3);
         platPrincipalDAO.ajouterPlatPrincipal(plat1);
-
-        // Insert Supplements
+        
         Supplement sup1 = new Supplement("Fromage", 1.00);
         Supplement sup2 = new Supplement("Bacon", 1.50);
         supplementDAO.ajouterSupplement(sup1);
         supplementDAO.ajouterSupplement(sup2);
-
-        // Create Repas
+        
         Repas repas1 = new Repas(plat1);
         repas1.ajouterSupplement(sup1);
         repasDAO.ajouterRepas(repas1);
-
-        // Create Commande
+        
         Commande commande1 = new Commande(client1);
         commande1.ajouterRepas(repas1);
         commandeDAO.ajouterCommande(commande1);
@@ -1071,8 +1055,7 @@ public class RestaurantShell {
             }
         }
     }
-
-    // Similar methods for gestionCommandes() and gestionPlats()...
+    
 
     public static void main(String[] args) {
         RestaurantShell shell = new RestaurantShell();
