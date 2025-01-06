@@ -13,6 +13,13 @@ classDiagram
         + void supprimerCommande(Commande commande)
     }
 
+    class Commande {
+        - int id
+        - Client client
+        - List<Repas> repas
+        - double prix
+        + double calculerTotal()
+    }
     class PlatPrincipal {
         - int id
         - String nom
@@ -42,13 +49,6 @@ classDiagram
         + double calculerTotal()
     }
 
-    class Commande {
-        - int id
-        - Client client
-        - List<Repas> repas
-        - double prix
-        + double calculerTotal()
-    }
 
     Client "1" -- "*" Commande: Commande
     Commande "1" --* "*" Repas: Contient
@@ -61,6 +61,7 @@ classDiagram
 ```mermaid
 classDiagram
     class ClientDAO {
+        - Connection connexion
         + List<Client> listeClients()
         + void creerClient(Client client)
         + Client lireClient(int id)
@@ -69,6 +70,7 @@ classDiagram
     }
 
     class PlatPrincipalDAO {
+        - Connection connexion
         + List<PlatPrincipal> listePlatsPrincipaux()
         + void creerPlatPrincipal(PlatPrincipal plat)
         + PlatPrincipal lirePlatPrincipal(int id)
@@ -77,6 +79,7 @@ classDiagram
     }
 
     class IngredientDAO {
+        - Connection connexion
         + List<Ingredient> listeIngredients()
         + void creerIngredient(Ingredient ingredient)
         + Ingredient lireIngredient(int id)
@@ -84,22 +87,22 @@ classDiagram
         + void supprimerIngredient(int id)
     }
 
-
     class SupplementDAO {
+        - Connection connexion
         + List<Supplement> listeSupplements()
         + void creerSupplement(Supplement supplement)
         + Supplement lireSupplement(int id)
         + void mettreAJourSupplement(Supplement supplement)
         + void supprimerSupplement(int id)
     }
-    
+
     class SingletonConnexionDB {
         -String url
         -String user
         -String password
         + Connection getConnection()
     }
-    
+
     SingletonConnexionDB "1" -- "*" ClientDAO: Utilise
     SingletonConnexionDB "1" -- "*" PlatPrincipalDAO: Utilise
     SingletonConnexionDB "1" -- "*" IngredientDAO: Utilise
@@ -107,10 +110,86 @@ classDiagram
 ```
 
 ## 2. Diagramme MLD
+````plantuml
+@startuml
 
+!theme plain
+top to bottom direction
+skinparam linetype ortho
+
+class client {
+   nom: varchar(100)
+   id: int
+}
+class ingredient {
+   nom: varchar(100)
+   prix: decimal(10,2)
+   id: int
+}
+class platprincipal {
+   nom: varchar(100)
+   id: int
+}
+class platprincipal_ingredient {
+   plat_principal_id: int
+   ingredient_id: int
+}
+class supplement {
+   nom: varchar(100)
+   prix: decimal(10,2)
+   id: int
+}
+
+platprincipal_ingredient  -[#595959,plain]-^  ingredient               : "ingredient_id:id"
+platprincipal_ingredient  -[#595959,plain]-^  platprincipal            : "plat_principal_id:id"
+@enduml
+
+````
 ## 3. Tables MySQL
 
-```mysql
+### Client Table
+```sql
+CREATE TABLE Client (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nom VARCHAR(100) NOT NULL
+);
+```
+
+### Ingredient Table
+```sql
+CREATE TABLE Ingredient (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nom VARCHAR(100) NOT NULL,
+    prix DECIMAL(10,2) NOT NULL
+);
+```
+
+### PlatPrincipal Table
+```sql
+CREATE TABLE PlatPrincipal (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nom VARCHAR(100) NOT NULL
+);
+```
+
+### Supplement Table
+```sql
+CREATE TABLE Supplement (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nom VARCHAR(100) NOT NULL,
+    prix DECIMAL(10,2) NOT NULL
+);
+```
+
+### Junction Table for PlatPrincipal and Ingredient
+```sql
+CREATE TABLE PlatPrincipal_Ingredient (
+    plat_principal_id INT,
+    ingredient_id INT,
+    PRIMARY KEY (plat_principal_id, ingredient_id),
+    FOREIGN KEY (plat_principal_id) REFERENCES PlatPrincipal(id),
+    FOREIGN KEY (ingredient_id) REFERENCES Ingredient(id)
+);
 ```
 
 ## 4. Classes Java
