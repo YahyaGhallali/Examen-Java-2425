@@ -4,6 +4,7 @@ module com.mri.examenjava2425 {
 
     requires org.controlsfx.controls;
     requires org.kordamp.bootstrapfx.core;
+    requires java.sql;
 
     opens com.mri.examenjava2425 to javafx.fxml;
     exports com.mri.examenjava2425;
