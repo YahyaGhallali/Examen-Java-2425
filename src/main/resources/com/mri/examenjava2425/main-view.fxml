@@ -11,7 +11,7 @@
    <left>
       <VBox alignment="TOP_CENTER" prefHeight="401.0" prefWidth="126.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="btn" mnemonicParsing="false" onAction="#onHelloButtonClick" text="Button">
+            <Button fx:id="btn" mnemonicParsing="false" onAction="#onHelloButtonClick" text="Clients">
                <VBox.margin>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </VBox.margin>
@@ -19,7 +19,7 @@
                   <Insets left="10.0" right="10.0" />
                </padding>
             </Button>
-            <Button mnemonicParsing="false" text="Button">
+            <Button mnemonicParsing="false" text="Commandes">
                <VBox.margin>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </VBox.margin>
@@ -27,19 +27,51 @@
                   <Insets left="10.0" right="10.0" />
                </padding>
             </Button>
-            <Button mnemonicParsing="false" text="Button">
+            <Button mnemonicParsing="false" text="Repas">
                <VBox.margin>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </VBox.margin>
                <padding>
                   <Insets left="10.0" right="10.0" />
                </padding>
+            </Button>
+            <Button mnemonicParsing="false" text="Plats">
+               <padding>
+                  <Insets left="10.0" right="10.0" />
+               </padding>
+               <VBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </VBox.margin>
+            </Button>
+            <Button mnemonicParsing="false" text="Ingrédients">
+               <padding>
+                  <Insets left="10.0" right="10.0" />
+               </padding>
+               <VBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </VBox.margin>
+            </Button>
+            <Button mnemonicParsing="false" text="Suppléments">
+               <padding>
+                  <Insets left="10.0" right="10.0" />
+               </padding>
+               <VBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </VBox.margin>
+            </Button>
+            <Button mnemonicParsing="false" text="Button">
+               <padding>
+                  <Insets left="10.0" right="10.0" />
+               </padding>
+               <VBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </VBox.margin>
             </Button>
          </children>
       </VBox>
    </left>
    <top>
-      <Label text="Application" BorderPane.alignment="CENTER">
+      <Label text="Gestion Restaurant" BorderPane.alignment="CENTER">
          <font>
             <Font size="25.0" />
          </font>

@@ -3,6 +3,7 @@
 ## 1. Diagrammes de Classe
 
 ### 1. Diagramme de classe principale:
+
 ```mermaid
 classDiagram
     class Client {
@@ -44,11 +45,10 @@ classDiagram
         - int id
         - PlatPrincipal platPrincipal
         - List<Supplement> supplements
-%%        - List<Ingredient> ingredients
+    %%        - List<Ingredient> ingredients
         - double prix
         + double calculerTotal()
     }
-
 
     Client "1" -- "*" Commande: Commande
     Commande "1" --* "*" Repas: Contient
@@ -58,6 +58,7 @@ classDiagram
 ```
 
 ### 2. Digramme de classe DAO:
+
 ```mermaid
 classDiagram
     class ClientDAO {
@@ -130,6 +131,7 @@ classDiagram
 ```
 
 ## 2. Diagramme MLD
+
 ````plantuml
 @startuml
 
@@ -187,97 +189,116 @@ repas_supplement          -[#595959,plain]-^  supplement               : "supple
 @enduml
 
 ````
+
 ## 3. Tables MySQL
 
 ### Client Table
+
 ```sql
-CREATE TABLE Client (
-                        id INT PRIMARY KEY AUTO_INCREMENT,
-                        nom VARCHAR(100) NOT NULL
+CREATE TABLE Client
+(
+    id  INT PRIMARY KEY AUTO_INCREMENT,
+    nom VARCHAR(100) NOT NULL
 );
 ```
 
 ### PlatPrincipal Table
+
 ```sql
-CREATE TABLE PlatPrincipal (
-    id INT PRIMARY KEY AUTO_INCREMENT,
+CREATE TABLE PlatPrincipal
+(
+    id  INT PRIMARY KEY AUTO_INCREMENT,
     nom VARCHAR(100) NOT NULL
 );
 ```
 
 ### Ingredient Table
+
 ```sql
-CREATE TABLE Ingredient (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    nom VARCHAR(100) NOT NULL,
+CREATE TABLE Ingredient
+(
+    id   INT PRIMARY KEY AUTO_INCREMENT,
+    nom  VARCHAR(100)   NOT NULL,
     prix DECIMAL(10, 2) NOT NULL
 );
 ```
 
 ### Supplement Table
+
 ```sql
-CREATE TABLE Supplement (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    nom VARCHAR(100) NOT NULL,
+CREATE TABLE Supplement
+(
+    id   INT PRIMARY KEY AUTO_INCREMENT,
+    nom  VARCHAR(100)   NOT NULL,
     prix DECIMAL(10, 2) NOT NULL
 );
 ```
 
 ### Junction Table for PlatPrincipal and Ingredient
+
 ```sql
-CREATE TABLE PlatPrincipal_Ingredient (
+CREATE TABLE PlatPrincipal_Ingredient
+(
     platprincipal_id INT,
-    ingredient_id INT,
-    FOREIGN KEY (platprincipal_id) REFERENCES PlatPrincipal(id),
-    FOREIGN KEY (ingredient_id) REFERENCES Ingredient(id),
+    ingredient_id    INT,
+    FOREIGN KEY (platprincipal_id) REFERENCES PlatPrincipal (id),
+    FOREIGN KEY (ingredient_id) REFERENCES Ingredient (id),
     PRIMARY KEY (platprincipal_id, ingredient_id)
 );
 ```
 
 ### Repas Table
+
 ```sql
-CREATE TABLE Repas (
-    id INT PRIMARY KEY AUTO_INCREMENT,
+CREATE TABLE Repas
+(
+    id               INT PRIMARY KEY AUTO_INCREMENT,
     platprincipal_id INT NOT NULL,
-    FOREIGN KEY (platprincipal_id) REFERENCES PlatPrincipal(id)
+    FOREIGN KEY (platprincipal_id) REFERENCES PlatPrincipal (id)
 );
 ```
 
 ### Junction Table for Repas and Supplement
+
 ```sql
-CREATE TABLE Repas_Supplement (
-    repas_id INT,
+CREATE TABLE Repas_Supplement
+(
+    repas_id      INT,
     supplement_id INT,
-    FOREIGN KEY (repas_id) REFERENCES Repas(id),
-    FOREIGN KEY (supplement_id) REFERENCES Supplement(id),
+    FOREIGN KEY (repas_id) REFERENCES Repas (id),
+    FOREIGN KEY (supplement_id) REFERENCES Supplement (id),
     PRIMARY KEY (repas_id, supplement_id)
 );
 ```
 
 ### Commande Table
+
 ```sql
-CREATE TABLE Commande (
-    id INT PRIMARY KEY AUTO_INCREMENT,
+CREATE TABLE Commande
+(
+    id        INT PRIMARY KEY AUTO_INCREMENT,
     client_id INT NOT NULL,
-    FOREIGN KEY (client_id) REFERENCES Client(id)
+    FOREIGN KEY (client_id) REFERENCES Client (id)
 );
 ```
 
 ### Junction Table for Commande and Repas
+
 ```sql
-CREATE TABLE Commande_Repas (
+CREATE TABLE Commande_Repas
+(
     commande_id INT,
-    repas_id INT,
-    FOREIGN KEY (commande_id) REFERENCES Commande(id),
-    FOREIGN KEY (repas_id) REFERENCES Repas(id),
+    repas_id    INT,
+    FOREIGN KEY (commande_id) REFERENCES Commande (id),
+    FOREIGN KEY (repas_id) REFERENCES Repas (id),
     PRIMARY KEY (commande_id, repas_id)
 );
 ```
 
-
 ## 4. Classes Java
 
 ### Client.java
+
 ```java
 public class Client {
     private int id;
@@ -293,6 +314,7 @@ public class Client {
 ```
 
 ### Commande.java
+
 ```java
 public class Commande {
     private int id;
@@ -328,13 +350,15 @@ public class Commande {
     }
 }
 ```
+
 ### PlatPrincipal.java
+
 ````java
 public class PlatPrincipal {
-private  int id;
-private String nom;
-private double prix;
-private List<Ingredient> ingredients;
+    private int id;
+    private String nom;
+    private double prix;
+    private List<Ingredient> ingredients;
 
     public PlatPrincipal(int id, String nom, List<Ingredient> ingredients) {
         this.id = id;
@@ -350,13 +374,15 @@ private List<Ingredient> ingredients;
     }
 }
 ````
+
 ### Commande.java
+
 ````java
 public class Commande {
-private int id;
-private Client client;
-private List<Repas> repas;
-private double prix;
+    private int id;
+    private Client client;
+    private List<Repas> repas;
+    private double prix;
 
 
     public Commande(int id, Client client, List<Repas> repas) {
@@ -369,12 +395,15 @@ private double prix;
         for (Repas repas : repas) {
             this.prix += repas.getPrix();
         }
-    }}
+    }
+}
 ````
+
 ### Ingredient.java
+
 ````java
 public class Ingredient {
-    private  int id;
+    private int id;
     private String nom;
     private double prix;
 
@@ -382,9 +411,12 @@ public class Ingredient {
         this.id = id;
         this.nom = nom;
         this.prix = prix;
-    }}
+    }
+}
 ````
+
 ### Repas.java
+
 ````java
 public class Repas {
     private int id;
@@ -409,13 +441,14 @@ public class Repas {
     }
 }
 ````
+
 ### Supplement.java
 
 ````java
 public class Supplement {
-    private  int id;
+    private int id;
     private String nom;
-    private  double prix;
+    private double prix;
 
     public Supplement(int id, String nom, double prix) {
         this.id = id;
@@ -427,6 +460,7 @@ public class Supplement {
 ````
 
 ### SingletonConnexionDB.java
+
 ````java
 public class SingletonConnexionDB {
     static final private String user = "root";
@@ -445,9 +479,11 @@ public class SingletonConnexionDB {
 
 
 ````
-## 5.  Classes DAO
+
+## 5. Classes DAO
 
 ### Classes ClientDAO
+
 ````java
 public class ClientDAO {
     private Connection connection;
@@ -507,6 +543,7 @@ public class ClientDAO {
 ````
 
 ### Classe PlatPrincipalDAO
+
 ````java
 public class PlatPrincipalDAO {
     private Connection connection;
@@ -515,7 +552,7 @@ public class PlatPrincipalDAO {
         PlatPrincipalDAO platPrincipalDAO = new PlatPrincipalDAO();
         System.out.println(platPrincipalDAO.listePlatsPrincipaux());
     }
-    
+
     public List<PlatPrincipal> listePlatsPrincipaux() throws SQLException {
         List<PlatPrincipal> platPrincipals = new ArrayList<>();
         connection = SingletonConnexionDB.getConnection();
@@ -552,8 +589,8 @@ public class PlatPrincipalDAO {
 }
 ````
 
-
 ### RepasDAO
+
 ````java
 public class RepasDAO {
     private Connection connection;
@@ -578,6 +615,7 @@ public class RepasDAO {
 
         return repas;
     }
+
     public Repas chercheRepas(int id) throws SQLException {
         String query = "SELECT * FROM Repas WHERE id = ?";
         connection = SingletonConnexionDB.getConnection();
@@ -613,7 +651,7 @@ public class RepasDAO {
 
     public void supprimerRepas(int id) throws SQLException {
         supprimerSupplementsDeRepas(id);
-        
+
         String query = "DELETE FROM Repas WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setInt(1, id);
@@ -627,7 +665,7 @@ public class RepasDAO {
             stmt.setInt(1, repas.getPlatPrincipal().getId());
             stmt.setInt(2, repas.getId());
             stmt.executeUpdate();
-            
+
             supprimerSupplementsDeRepas(repas.getId());
             sauvegarderSupplements(repas);
         }
@@ -670,7 +708,7 @@ public class RepasDAO {
             stmt.executeUpdate();
         }
     }
-    
+
 
     public List<Repas> chercheTousRepas() throws SQLException {
         List<Repas> repas = new ArrayList<>();
@@ -711,6 +749,7 @@ public class RepasDAO {
 ````
 
 ### IngredientDAO
+
 ````java
 public class IngredientDAO {
     private Connection connection;
@@ -766,7 +805,9 @@ public class IngredientDAO {
     }
 }
 ````
+
 ### SupplementDAO
+
 ````java
 public class SupplementDAO {
     private Connection connection;
@@ -831,7 +872,9 @@ public class SupplementDAO {
 
 }
 ````
+
 ### CommandeDAO
+
 ````java
 public class CommandeDAO {
     private Connection connection;
@@ -881,7 +924,7 @@ public class CommandeDAO {
             stmt.setInt(1, commande.getClient().getId());
             stmt.setInt(2, commande.getId());
             stmt.executeUpdate();
-            
+
             supprimerRepasDeCommande(commande.getId());
             sauvegarderRepas(commande);
         }
@@ -891,6 +934,7 @@ public class CommandeDAO {
 ````
 
 ## 6. Menu Shell Restaurant
+
 ````java
 
 package com.mri.examenjava2425;
@@ -919,7 +963,7 @@ public class RestaurantShell {
             ingredientDAO = new IngredientDAO();
 
             scanner = new Scanner(System.in);
-            
+
             insertSampleData();
 
         } catch (SQLException e) {
@@ -933,29 +977,29 @@ public class RestaurantShell {
         Client client2 = new Client("Marie Martin");
         clientDAO.ajouterClient(client1);
         clientDAO.ajouterClient(client2);
-        
+
         Ingredient ing1 = new Ingredient("Pain burger", 1.50);
         Ingredient ing2 = new Ingredient("Steak haché", 3.50);
         Ingredient ing3 = new Ingredient("Salade", 0.50);
         ingredientDAO.ajouterIngredient(ing1);
         ingredientDAO.ajouterIngredient(ing2);
         ingredientDAO.ajouterIngredient(ing3);
-        
+
         PlatPrincipal plat1 = new PlatPrincipal("Burger Classic");
         plat1.ajouterIngredient(ing1);
         plat1.ajouterIngredient(ing2);
         plat1.ajouterIngredient(ing3);
         platPrincipalDAO.ajouterPlatPrincipal(plat1);
-        
+
         Supplement sup1 = new Supplement("Fromage", 1.00);
         Supplement sup2 = new Supplement("Bacon", 1.50);
         supplementDAO.ajouterSupplement(sup1);
         supplementDAO.ajouterSupplement(sup2);
-        
+
         Repas repas1 = new Repas(plat1);
         repas1.ajouterSupplement(sup1);
         repasDAO.ajouterRepas(repas1);
-        
+
         Commande commande1 = new Commande(client1);
         commande1.ajouterRepas(repas1);
         commandeDAO.ajouterCommande(commande1);
@@ -1055,7 +1099,7 @@ public class RestaurantShell {
             }
         }
     }
-    
+
 
     public static void main(String[] args) {
         RestaurantShell shell = new RestaurantShell();
@@ -1063,4 +1107,33 @@ public class RestaurantShell {
     }
 }
 ````
- 
+
+## 7. Inteface JAVAFX
+
+````java
+package com.mri.examenjava2425;
+
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
+import java.io.IOException;
+
+public class MainApplication extends Application {
+    @Override
+    public void start(Stage stage) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("main-view.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        stage.setTitle("Application Examen 24-25");
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public static void main(String[] args) {
+        launch();
+    }
+}
+````
+### Capture D'interface UI
+![Interface.png](Interface.png)

@@ -1,9 +1,6 @@
 package com.mri.examenjava2425;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,7 +29,7 @@ public class RepasDAO {
     }
     public Repas chercheRepas(int id) throws SQLException {
         String query = "SELECT * FROM Repas WHERE id = ?";
-        connection = SingletonConnexionDB.getConnection()
+        connection = SingletonConnexionDB.getConnection();
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
@@ -50,7 +47,7 @@ public class RepasDAO {
 
     public void ajouterRepas(Repas repas) throws SQLException {
         String query = "INSERT INTO Repas (platprincipal_id) VALUES (?)";
-        connection = SingletonConnexionDB.getConnection()
+        connection = SingletonConnexionDB.getConnection();
         try (PreparedStatement stmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setInt(1, repas.getPlatPrincipal().getId());
             stmt.executeUpdate();
