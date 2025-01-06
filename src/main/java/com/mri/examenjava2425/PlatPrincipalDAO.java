@@ -14,12 +14,10 @@ public class PlatPrincipalDAO {
         PlatPrincipalDAO platPrincipalDAO = new PlatPrincipalDAO();
         System.out.println(platPrincipalDAO.listePlatsPrincipaux());
     }
-
-//    public List<>
     public List<PlatPrincipal> listePlatsPrincipaux() throws SQLException {
         List<PlatPrincipal> platPrincipals = new ArrayList<>();
         connection = SingletonConnexionDB.getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM platprincipal");
+        PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM plat_principal");
         ResultSet resultSet = preparedStatement.executeQuery();
 
         while (resultSet.next()) {

@@ -66,4 +66,7 @@ public class PlatPrincipal {
     public void setIngredients(List<Ingredient> ingredients) {
         this.ingredients = ingredients;
     }
+
+    public void ajouterIngredient(Ingredient ing1) {
+    }
 }
