@@ -68,5 +68,6 @@ public class PlatPrincipal {
     }
 
     public void ajouterIngredient(Ingredient ing1) {
+
     }
 }
