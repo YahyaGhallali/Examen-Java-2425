@@ -56,7 +56,11 @@ classDiagram
     Repas "1" --* "1" PlatPrincipal: composé
     Repas "*" --* "1" Supplement: Composé
 ```
-
+1. Le Client pourra effectuer plusieurs commande
+2. La commande pourra contenir plusieurs repas
+3. Le PlatPrincipale pourra contenir plusieurs ingredients
+4. Le Repas sera composé que d'un plat
+5. le repas aura 1 ou plusieurs supplément
 ### 2. Digramme de classe DAO:
 
 ```mermaid
