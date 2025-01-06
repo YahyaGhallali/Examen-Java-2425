@@ -169,7 +169,7 @@ public class RestaurantShell {
         }
     }
 
-    // Similar methods for gestionCommandes() and gestionPlats()...
+
 
     public static void main(String[] args) {
         RestaurantShell shell = new RestaurantShell();
