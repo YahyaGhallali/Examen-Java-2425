@@ -14,14 +14,50 @@ public class Client {
         this.commandes = commandes;
     }
 
+    @Override
+    public String toString() {
+        return "Client{" +
+                "id=" + id +
+                ", nom='" + nom + '\'' +
+                ", commandes=" + commandes +
+                '}';
+    }
+
     public Client(int id, String nom) {
         this.id = id;
         this.nom = nom;
         this.commandes = new ArrayList<Commande>();
     }
 
-    public  void  ajouterCommande(Commande commande) {
+    public void ajouterCommande(Commande commande) {
         this.commandes.add(commande);
     }
 
+    public void supprimerCommande(Commande commande) {
+        this.commandes.remove(commande);
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public List<Commande> getCommandes() {
+        return commandes;
+    }
+
+    public void setCommandes(List<Commande> commandes) {
+        this.commandes = commandes;
+    }
 }

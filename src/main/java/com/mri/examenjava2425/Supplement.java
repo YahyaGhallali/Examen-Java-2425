@@ -1,20 +1,19 @@
 package com.mri.examenjava2425;
 
-public class Ingredient {
+public class Supplement {
     private  int id;
     private String nom;
-    private double prix;
+    private  double prix;
 
-    public Ingredient(int id, String nom, double prix) {
+    public Supplement(int id, String nom, double prix) {
         this.id = id;
         this.nom = nom;
         this.prix = prix;
     }
 
-
     @Override
     public String toString() {
-        return "Ingredient{" +
+        return "Supplement{" +
                 "id=" + id +
                 ", nom='" + nom + '\'' +
                 ", prix=" + prix +
@@ -37,11 +36,11 @@ public class Ingredient {
         this.nom = nom;
     }
 
-    public void setPrix(double prix) {
-        this.prix = prix;
+    public double getPrix() {
+        return prix;
     }
 
-    public double getPrix() {
-        return this.prix;
+    public void setPrix(double prix) {
+        this.prix = prix;
     }
 }
